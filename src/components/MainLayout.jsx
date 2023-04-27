@@ -7,7 +7,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu } from "antd";
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -39,7 +39,7 @@ const MainLayout = () => {
         />
       </Sider>
       <Layout>
-        <Header
+        <div
           style={{
             padding: 0,
           }}
@@ -54,7 +54,7 @@ const MainLayout = () => {
               height: 64,
             }}
           />
-        </Header>
+        </div>
         <Content
           style={{
             margin: "24px 16px",
