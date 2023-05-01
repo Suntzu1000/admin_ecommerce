@@ -47,8 +47,12 @@ body {
   height: 64px;
 }
 main {
+  height: 100vh;
   overflow-y: scroll;
   background: transparent !important;
+}
+main::-webkit-scrollbar{
+  width: 0px;
 }
 .ant-menu-title-content {
   font-size: 16px;
