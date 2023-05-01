@@ -25,7 +25,7 @@ const data1 = [];
 for (let i = 0; i < 46; i++) {
   data1.push({
     key: i,
-    name: `Jambrolão ${i}`,
+    name: `Jambrolhão ${i}`,
     product: 32,
     status: `London, Park Lane no. ${i}`,
   });
@@ -168,7 +168,6 @@ const Dashboard = () => {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
-      
     </div>
   );
 };

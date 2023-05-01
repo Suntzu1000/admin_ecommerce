@@ -30,10 +30,10 @@ for (let i = 0; i < 46; i++) {
   });
 }
 
-const BlogCatList = () => {
+const BrandList = () => {
   return (
     <div>
-      <h3 className="mb-4">Blog de Categoria</h3>
+      <h3 className="mb-4">Marcas</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -41,4 +41,4 @@ const BlogCatList = () => {
   );
 };
 
-export default BlogCatList;
+export default BrandList;
