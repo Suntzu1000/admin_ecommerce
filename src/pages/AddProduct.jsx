@@ -26,7 +26,7 @@ const props = {
   },
 };
 
-const AddBlog = () => {
+const AddBlogCat = () => {
   const [desc, setDesc] = useState();
   const handleDesc = (value) => {
     setDesc(value);
@@ -34,10 +34,23 @@ const AddBlog = () => {
 
   return (
     <div>
-      <h3 className="mb-4">Add Blog</h3>
-
-      <div className="">
+      <h3 className="mb-4 title">Add Produtos </h3>
+      <div>
         <form action="">
+          <CustomInput type="text" label="Acessar Título de Produto" />
+          <div className="mb-3">
+            <ReactQuill theme="snow" value={desc} onChange={handleDesc} />
+          </div>
+          <CustomInput type="number" label="Acessar Preço de Produto" />
+          <select name="" className="form-control py-3 mb-3 " id="">
+            <option value=""> Selecionar Marca </option>
+          </select>
+          <select name="" className="form-control py-3 mb-3 " id="">
+            <option value=""> Selecionar Categoria do Produto</option>
+          </select>
+          <select name="" className="form-control py-3 mb-3 " id="">
+            <option value=""> Selecionar Cor De Produto </option>
+          </select>
           <Dragger {...props}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
@@ -50,19 +63,11 @@ const AddBlog = () => {
               upload de dados da empresa ou outros arquivos proibidos.
             </p>
           </Dragger>
-
-          <div className="mt-4">
-            <CustomInput type="text" label="Dígite o título do Blog" />
-          </div>
-          <select name="" className="form-control py-3 mb-3 " id="">
-            <option value=""> Selecione a Categoria do Blog </option>
-          </select>
-          <ReactQuill theme="snow" value={desc} onChange={handleDesc} />
           <button
             className="btn btn-success border-0 rounded-3 my-5 "
             type="submit"
           >
-            Add Blog
+            Add Produto
           </button>
         </form>
       </div>
@@ -70,4 +75,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default AddBlogCat;

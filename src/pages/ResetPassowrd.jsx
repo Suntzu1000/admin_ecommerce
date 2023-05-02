@@ -7,7 +7,7 @@ const ResetPassword = () => {
       <br />
       <br />
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4 ">
-        <h3 className="text-center">Esqueceu Senha</h3>
+        <h3 className="text-center title">Esqueceu Senha</h3>
         <p className="text-center">
           Por favor! Digite sua nova Senha!
         </p>

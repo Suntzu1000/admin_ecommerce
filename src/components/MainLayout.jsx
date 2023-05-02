@@ -13,7 +13,7 @@ import { SiBrandfolder } from "react-icons/si";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { Button, Layout, Menu, theme } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import perfil from "../assets/thief3.png";
 
@@ -108,7 +108,7 @@ const MainLayout = () => {
               label: "Pedidos",
             },
             {
-              key: "blog",
+              key: "blogs",
               icon: <FaBloggerB className="fs-4" />,
               label: "Blogs",
               children: [
@@ -118,14 +118,14 @@ const MainLayout = () => {
                   label: "Add Blogs",
                 },
                 {
-                  key: "blog-category",
+                  key: "blog-list",
                   icon: <FaBloggerB className="fs-4" />,
-                  label: "Categoria Blogs",
+                  label: "Lista de Blogs",
                 },
                 {
-                  key: "blog-list",
+                  key: "blog-category",
                   icon: <ImBlog className="fs-4" />,
-                  label: "Lista de Blogs",
+                  label: "Add Categoria Blogs",
                 },
                 {
                   key: "blog-category-list",
@@ -160,17 +160,44 @@ const MainLayout = () => {
             }}
           />
           <div className="d-flex gap-4 align-items-center">
-            <div className="position-relative" >
+            <div className="position-relative">
               <IoIosNotifications className="fs-2" />
-              <span className="badge bg-warning rounded-circle p-1 position-absolute " >3</span>
+              <span className="badge bg-warning rounded-circle p-1 position-absolute ">
+                3
+              </span>
             </div>
-            <div className="d-flex gap-3 align-items-center">
+            <div className="d-flex gap-3 align-items-center dropdown">
               <div>
                 <img width={32} height={32} src={perfil} alt="Perfil" />
               </div>
-              <div>
+              <div
+                role="button"
+                id="dropdownMenuLink"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <h5 className="mb-0 ">Suntzu</h5>
                 <p className="mb-0">gabrielfootze@gmail.com</p>
+              </div>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
+                    Perfil
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="/"
+                  >
+                    Sair
+                  </Link>
+                </li>
               </div>
             </div>
           </div>
