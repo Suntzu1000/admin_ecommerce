@@ -32,7 +32,7 @@ export const customerSlice = createSlice({
         state.isSuccess = true;
         state.customers = action.payload;
       })
-      .addCase(getUsers.fulfilled, (state, action) => {
+      .addCase(getUsers.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
