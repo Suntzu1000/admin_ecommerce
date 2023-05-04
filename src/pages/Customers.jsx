@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Table } from "antd";
+import { useDispatch } from "react-redux";
+import { getUsers } from "../features/customers/customerSlice";
 
 const columns = [
   {
@@ -23,14 +25,18 @@ const columns = [
 const data1 = [];
 for (let i = 0; i < 46; i++) {
   data1.push({
-    key: i,
-    name: `Jambrolão ${i}`,
-    product: 32,
-    status: `London, Park Lane no. ${i}`,
+    key: i + 1,
+    name: `Jambrolão`,
+    email: `gabrielfootze@gmail.com`,
+    mobile: `ticaracatica`,
   });
 }
 
 const Customers = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUsers)
+  }, [])
   return (
     <div>
       <h3 className="mb-4 title">Clientes</h3>

@@ -2,18 +2,18 @@ import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let userSchema = Yup.object().shape({
-    email: Yup.string()
+  let userSchema = yup.object().shape({
+    email: yup.string()
       .email("Email Deve Ser Válido")
       .required("Email Obrigatório!"),
-    password: Yup.string().required("Senha Obrigatória!"),
+    password: yup.string().required("Senha Obrigatória!"),
   });
 
   const formik = useFormik({
@@ -24,21 +24,19 @@ const Login = () => {
     validationSchema: userSchema,
     onSubmit: (values) => {
       dispatch(login(values));
-      alert(JSON.stringify(values, null, 2));
     },
   });
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
+  const authState = useSelector((state) => state);
+
+  const { user, isLoading, isError, isSuccess, message } = authState.auth;
 
   useEffect(() => {
-    if (!user == null || isSuccess) {
-      navigate('admin')
+    if (isSuccess) {
+      navigate("admin");
+    } else {
+      navigate("");
     }
-    else{
-      alert('NO')
-    }
-  }, [ user, isLoading, isError, isSuccess, message]);
+  }, [user, isLoading, isError, isSuccess, message]);
 
   return (
     <div className="py-4" style={{ background: "#ffd333", minHeight: "100vh" }}>
@@ -47,6 +45,9 @@ const Login = () => {
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4 ">
         <h3 className="text-center title">Login</h3>
         <p className="text-center">Entre na sua conta para continuar</p>
+        <div className="error text-center">
+          {message.message === "Obrigatório" ? "Você não é um Admin!" : ""}
+        </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
