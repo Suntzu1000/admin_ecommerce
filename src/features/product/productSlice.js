@@ -19,7 +19,7 @@ const initialState = {
 };
 
 export const productSlice = createSlice({
-  name: "users",
+  name: "products",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -37,7 +37,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.customers = action.error;
+        state.message = action.error;
       });
   },
 });

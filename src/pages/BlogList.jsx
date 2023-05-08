@@ -1,6 +1,7 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { Table } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlogs } from "../features/blogs/blogSlice";
 
 const columns = [
   {
@@ -8,8 +9,8 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "NAME",
-    dataIndex: "name",
+    title: "Título",
+    dataIndex: "title",
   },
   {
     title: "Produto",
@@ -20,17 +21,22 @@ const columns = [
     dataIndex: "status",
   },
 ];
-const data1 = [];
-for (let i = 0; i < 46; i++) {
-  data1.push({
-    key: i,
-    name: `Jambrolão ${i}`,
-    product: 32,
-    status: `London, Park Lane no. ${i}`,
-  });
-}
 
 const BlogList = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getBlogs());
+  });
+  const BlogState = useSelector((state) => state.blogs.blogs);
+  const data1 = [];
+  for (let i = 0; i < BlogState.length; i++) {
+    data1.push({
+      key: i + 1,
+      title: BlogState[i].title,
+      product: 32,
+      status: `London, Park Lane no. ${i}`,
+    });
+  }
   return (
     <div>
       <h3 className="mb-4 title">Lista de Blogs</h3>
