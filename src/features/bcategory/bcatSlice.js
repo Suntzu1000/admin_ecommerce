@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import colorService from "./colorService";
+import  bcatService  from "./bcatService";
 
-
-export const getColors = createAsyncThunk(
-  "color/get-colors",
+export const getCategories = createAsyncThunk(
+  "blogCategory/get-categories",
   async (thunkAPI) => {
     try {
-      return await colorService.getColors();
+      return await bcatService.getBlogCategories();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -14,29 +13,29 @@ export const getColors = createAsyncThunk(
 );
 
 const initialState = {
-  colors: [],
+  bCategories: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: "",
 };
 
-export const colorSlice = createSlice({
-  name: "colors",
+export const pCategorySlice = createSlice({
+  name: "bCategories",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getColors.pending, (state) => {
+      .addCase(getCategories.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getColors.fulfilled, (state, action) => {
+      .addCase(getCategories.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.colors = action.payload;
+        state.bCategories = action.payload;
       })
-      .addCase(getColors.rejected, (state, action) => {
+      .addCase(getCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -44,4 +43,4 @@ export const colorSlice = createSlice({
       });
   },
 });
-export default colorSlice.reducer;
+export default pCategorySlice.reducer;

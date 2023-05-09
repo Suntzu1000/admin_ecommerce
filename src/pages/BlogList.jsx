@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { Table } from "antd";
+import { FiEdit } from "react-icons/fi";
+import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getBlogs } from "../features/blogs/blogSlice";
+import { Link } from "react-router-dom";
 
 const columns = [
   {
@@ -11,14 +14,15 @@ const columns = [
   {
     title: "Título",
     dataIndex: "title",
+    sorter: (a, b) => a.title.length - b.title.length,
   },
   {
-    title: "Produto",
-    dataIndex: "product",
+    title: "Descrição",
+    dataIndex: "description",
   },
   {
-    title: "Status",
-    dataIndex: "status",
+    title: "Categoria",
+    dataIndex: "category",
   },
 ];
 
@@ -26,15 +30,15 @@ const BlogList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getBlogs());
-  });
+  }, []);
   const BlogState = useSelector((state) => state.blogs.blogs);
   const data1 = [];
   for (let i = 0; i < BlogState.length; i++) {
     data1.push({
       key: i + 1,
       title: BlogState[i].title,
-      product: 32,
-      status: `London, Park Lane no. ${i}`,
+      description: BlogState[i].description,
+      category: BlogState[i].category,
     });
   }
   return (

@@ -137,7 +137,7 @@ const MainLayout = () => {
             {
               key: "enquiries",
               icon: <FaClipboardList className="fs-4" />,
-              label: "Informação",
+              label: "Informações",
             },
           ]}
         />
