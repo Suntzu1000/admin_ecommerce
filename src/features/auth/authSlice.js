@@ -62,6 +62,7 @@ export const authSlice = createSlice({
       })
       .addCase(getOrders.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isError = false;
         state.isSuccess = true;
         state.orders = action.payload;
         state.message = "sucesso";
@@ -76,3 +77,5 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+
+

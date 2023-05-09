@@ -12,8 +12,20 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Produtos",
-    dataIndex: "products",
+    title: "NOME",
+    dataIndex: "firstname",
+  },
+  {
+    title: "Ação",
+    dataIndex: "action",
+  },
+  {
+    title: "Produto",
+    dataIndex: "product",
+  },
+  {
+    title: "Valor",
+    dataIndex: "valor",
   },
 ];
 
@@ -27,13 +39,17 @@ const Orders = () => {
   for (let i = 0; i < orderState.length; i++) {
     data1.push({
       key: i + 1,
-      products: orderState[i].products,
-      product: (
-        <Link to={`/admin/order/${orderState[i].orderby._id}`}>
-          View Orders
-        </Link>
-      ),
-      amount: orderState[i].paymentIntent.amount,
+      firstname: orderState[i].orderby.firstname,
+      product: orderState[i].products.map((i) => {
+        return (
+          <>
+            <ul>
+              <li>{i.product.title}</li>
+            </ul>
+          </>
+        );
+      }),
+      valor: orderState[i].paymentIntent.amount,
       date: new Date(orderState[i].createdAt).toLocaleString(),
       action: (
         <>
