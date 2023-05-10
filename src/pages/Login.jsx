@@ -6,15 +6,18 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
 
-const Login = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  let userSchema = yup.object().shape({
+
+let userSchema = yup.object().shape({
     email: yup.string()
       .email("Email Deve Ser Válido")
       .required("Email Obrigatório!"),
     password: yup.string().required("Senha Obrigatória!"),
   });
+  
+const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
 
   const formik = useFormik({
     initialValues: {

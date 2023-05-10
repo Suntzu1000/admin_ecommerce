@@ -27,6 +27,10 @@ const columns = [
     title: "Valor",
     dataIndex: "valor",
   },
+   {
+    title: "Data",
+    dataIndex: "date",
+  },
 ];
 
 const Orders = () => {
@@ -40,7 +44,7 @@ const Orders = () => {
     data1.push({
       key: i + 1,
       firstname: orderState[i].orderby.firstname,
-      product: orderState[i].products.map((i) => {
+      product: orderState[i].products.map((i, j) => {
         return (
           <>
             <ul>
