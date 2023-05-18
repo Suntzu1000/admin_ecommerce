@@ -7,6 +7,8 @@ import {
   AiOutlinePicLeft,
   AiOutlinePicRight,
 } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ImBlog } from "react-icons/im";
 import { IoIosNotifications } from "react-icons/io";
 import { SiBrandfolder } from "react-icons/si";
@@ -209,6 +211,17 @@ const MainLayout = () => {
             minHeight: 280,
           }}
         >
+          <ToastContainer
+            position="top-right"
+            autoClose={250}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            theme="light"
+          />
           <Outlet />
         </Content>
       </Layout>
