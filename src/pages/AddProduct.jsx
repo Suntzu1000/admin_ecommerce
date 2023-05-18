@@ -4,7 +4,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -40,6 +40,17 @@ const AddProduct = () => {
   const pCategoryState = useSelector((state) => state.pcategory.pCategories);
   const colorState = useSelector((state) => state.colors.colors);
   const imgState = useSelector((state) => state.upload.images);
+  const newProduct = useSelector((state) => state.product);
+  const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+
+  useEffect(() => {
+    if (isSuccess && createdProduct) {
+      toast.success("Produto Adicionado com Sucesso!");
+    }
+    if (isError) {
+      toast.error("Algo deu errado!");
+    }
+  }, [isSuccess, isError, isLoading]);
 
   useEffect(() => {
     dispatch(getBrands());
@@ -89,8 +100,8 @@ const AddProduct = () => {
       formik.resetForm();
       setColor(null);
       setTimeout(() => {
-        navigate("/admin/list-product")
-      })
+        navigate("/admin/product-list");
+      }, 3000);
     },
   });
 
