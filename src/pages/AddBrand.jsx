@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,17 +15,16 @@ const AddBlogCat = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const newBrand = useSelector((state) => state.brand);
-  const { isSuccess, isError, isLoading, createdBrand} = newBrand;
-
+  const { isSuccess, isError, isLoading, createdBrand } = newBrand;
 
   useEffect(() => {
-    if(isSuccess && createdBrand){
+    if (isSuccess && createdBrand) {
       toast.success("Marca adicionada com Sucesso!");
     }
     if (isError) {
       toast.error("Algo deu errado!");
     }
-  }, [isSuccess, isError, isLoading,])
+  }, [isSuccess, isError, isLoading, createdBrand]);
 
   const formik = useFormik({
     initialValues: {
@@ -53,8 +52,9 @@ const AddBlogCat = () => {
             onCh={formik.handleChange("title")}
             onBlur={formik.handleBlur("title")}
             val={formik.values.title}
+            id="brand"
           />
-           <div className="error">
+          <div className="error">
             {formik.touched.title && formik.errors.title}
           </div>
           <button
