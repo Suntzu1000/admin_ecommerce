@@ -19,7 +19,7 @@ const AddBlogCat = () => {
   const { isSuccess, isError, isLoading, createdBlogCategory } = newBlogCategory;
 
   useEffect(() => {
-    if (isSuccess && createNewBlogCat) {
+    if (isSuccess && createdBlogCategory) {
       toast.success("Adicionado com Sucesso!");
     }
     if (isError) {

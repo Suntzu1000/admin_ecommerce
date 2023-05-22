@@ -31,6 +31,7 @@ let userSchema = yup.object().shape({
 });
 
 const AddProduct = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [brand, setBrand] = useState([]);
@@ -171,7 +172,7 @@ const AddProduct = () => {
             onBlur={formik.handleBlur("category")}
             value={formik.values.category}
             className="form-control py-3 mb-3"
-            id=""
+            id="category"
           >
             <option value=""> Selecionar Categoria do Produto</option>
             {pCategoryState.map((i, cat) => {
