@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { createColor } from "../features/color/colorSlice";
+import { resetState } from "../features/color/colorSlice";
 
 let userSchema = yup.object().shape({
   title: yup.string().required("Cor Obrigatório!"),
@@ -13,7 +13,6 @@ let userSchema = yup.object().shape({
 
 const AddColor = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const newColor = useSelector((state) => state.colors);
   const { isSuccess, isError, isLoading, createdColor } = newColor;
 
@@ -35,7 +34,7 @@ const AddColor = () => {
       dispatch(createColor(values));
       formik.resetForm();
       setTimeout(() => {
-        navigate("/admin/list-colors");
+        dispatch(resetState());
       }, 3000);
     },
   });

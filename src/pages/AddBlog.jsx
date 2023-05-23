@@ -1,4 +1,4 @@
-import { React, useEffect} from "react";
+import { React, useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -6,10 +6,9 @@ import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { createBlog } from "../features/blogs/blogSlice";
+import { createBlog, resetState } from "../features/blogs/blogSlice";
 import { getCategories } from "../features/bcategory/bcatSlice";
 
 let userSchema = yup.object().shape({
@@ -20,7 +19,6 @@ let userSchema = yup.object().shape({
 
 const AddBlog = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const imgState = useSelector((state) => state.upload.images);
   const bCatState = useSelector((state) => state.bcategory.bCategories);
   const blogState = useSelector((state) => state.blogs);
@@ -38,14 +36,6 @@ const AddBlog = () => {
   useEffect(() => {
     dispatch(getCategories());
   }, []);
-
-  /*const colors = [];
-  colorState.forEach((i) => {
-    colors.push({
-      label: i.title,
-      value: i._id,
-    });
-  })*/
 
   const img = [];
   imgState.forEach((i) => {
@@ -71,7 +61,7 @@ const AddBlog = () => {
       dispatch(createBlog(values));
       formik.resetForm();
       setTimeout(() => {
-        navigate("/admin/blog-list");
+        dispatch(resetState());
       }, 3000);
     },
   });

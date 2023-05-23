@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { createNewBlogCat } from "../features/bcategory/bcatSlice";
+import { createNewBlogCat, resetState } from "../features/bcategory/bcatSlice";
 import { useFormik } from "formik";
 
 let userSchema = yup.object().shape({
@@ -12,11 +11,10 @@ let userSchema = yup.object().shape({
 });
 
 const AddBlogCat = () => {
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const newBlogCategory = useSelector((state) => state.bcategory);
-  const { isSuccess, isError, isLoading, createdBlogCategory } = newBlogCategory;
+  const { isSuccess, isError, isLoading, createdBlogCategory } =
+    newBlogCategory;
 
   useEffect(() => {
     if (isSuccess && createdBlogCategory) {
@@ -36,7 +34,7 @@ const AddBlogCat = () => {
       dispatch(createNewBlogCat(values));
       formik.resetForm();
       setTimeout(() => {
-        navigate("/admin/blog-category-list");
+        dispatch(resetState());
       }, 3000);
     },
   });
@@ -45,7 +43,7 @@ const AddBlogCat = () => {
     <div>
       <h3 className="mb-4 title">Add Blog por Categoria </h3>
       <div>
-        <form action="" onSubmit={formik.handleSubmit} >
+        <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
             label="Definir Categoria de Blog"

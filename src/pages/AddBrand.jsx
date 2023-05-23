@@ -1,25 +1,54 @@
 import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { createBrand } from "../features/brand/brandSlice";
+import {
+  createBrand,
+  getABrand,
+  updateBrand,
+} from "../features/brand/brandSlice";
 import { useFormik } from "formik";
+import { resetState } from "../features/blogs/blogSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 let userSchema = yup.object().shape({
   title: yup.string().required("Nome de Marca Obrigatório!"),
 });
 
-const AddBlogCat = () => {
+const AddBrand = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
+  const getBrandId = location.pathname.split("/")[3];
   const newBrand = useSelector((state) => state.brand);
-  const { isSuccess, isError, isLoading, createdBrand } = newBrand;
+  const {
+    isSuccess,
+    isError,
+    isLoading,
+    createdBrand,
+    brandName,
+    updatedBrand,
+  } = newBrand;
+
+  useEffect(
+    (values) => {
+      if (getBrandId !== undefined) {
+        dispatch(getABrand(getBrandId));
+      } else {
+        dispatch(resetState());
+      }
+    },
+    [getBrandId]
+  );
 
   useEffect(() => {
     if (isSuccess && createdBrand) {
       toast.success("Marca adicionada com Sucesso!");
+    }
+    if (updatedBrand && isSuccess) {
+      toast.success("Atualizado com Sucesso!");
+      navigate("/admin/list-brand");
     }
     if (isError) {
       toast.error("Algo deu errado!");
@@ -27,22 +56,30 @@ const AddBlogCat = () => {
   }, [isSuccess, isError, isLoading, createdBrand]);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      brand: "",
+      title: brandName || "",
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
-      dispatch(createBrand(values));
-      formik.resetForm();
-      setTimeout(() => {
-        navigate("/admin/list-brand");
-      }, 3000);
+      if (getBrandId !== undefined) {
+        const data = { id: getBrandId, brandData: values };
+        dispatch(updateBrand(data));
+      } else {
+        dispatch(createBrand(values));
+        formik.resetForm();
+        setTimeout(() => {
+          dispatch(resetState());
+        }, 3000);
+      }
     },
   });
 
   return (
     <div>
-      <h3 className="mb-4">Add Marca </h3>
+      <h3 className="mb-4">
+        {getBrandId !== undefined ? "Editar" : "Adicionar"} Marca
+      </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -61,7 +98,7 @@ const AddBlogCat = () => {
             className="btn btn-success border-0 rounded-3 my-5 "
             type="submit"
           >
-            Add Marca
+            {getBrandId !== undefined ? "Editar" : "Adicionar"} Marca
           </button>
         </form>
       </div>
@@ -69,4 +106,4 @@ const AddBlogCat = () => {
   );
 };
 
-export default AddBlogCat;
+export default AddBrand;

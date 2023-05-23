@@ -7,14 +7,13 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { getBrands } from "../features/brand/brandSlice";
 import { getCategories } from "../features/pcategory/pcategorySlice";
 import { getColors } from "../features/color/colorSlice";
 import { Select } from "antd";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
-import { createProducts } from "../features/product/productSlice";
+import { createProducts, resetState } from "../features/product/productSlice";
 
 let userSchema = yup.object().shape({
   title: yup.string().required("Título Obrigatório!"),
@@ -31,10 +30,7 @@ let userSchema = yup.object().shape({
 });
 
 const AddProduct = () => {
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [brand, setBrand] = useState([]);
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
   const brandState = useSelector((state) => state.brand.brands);
@@ -51,13 +47,13 @@ const AddProduct = () => {
     if (isError) {
       toast.error("Algo deu errado!");
     }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccess, isError, isLoading, createdProduct]);
 
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getCategories());
     dispatch(getColors());
-  }, [brand]);
+  }, []);
 
   const colors = [];
   colorState.forEach((i) => {
@@ -101,7 +97,7 @@ const AddProduct = () => {
       formik.resetForm();
       setColor(null);
       setTimeout(() => {
-        navigate("/admin/product-list");
+        dispatch(resetState());
       }, 3000);
     },
   });

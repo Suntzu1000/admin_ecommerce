@@ -7,9 +7,10 @@ import {
   AiOutlinePicLeft,
   AiOutlinePicRight,
 } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ImBlog } from "react-icons/im";
+import { RiCouponLine } from "react-icons/ri";
 import { IoIosNotifications } from "react-icons/io";
 import { SiBrandfolder } from "react-icons/si";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -108,6 +109,23 @@ const MainLayout = () => {
               key: "orders",
               icon: <FaClipboardList className="fs-4" />,
               label: "Pedidos",
+            },
+            {
+              key: "marketing",
+              icon: <RiCouponLine className="fs-4" />,
+              label: "Marketing",
+              children: [
+                {
+                  key: "coupon",
+                  icon: <ImBlog className="fs-4" />,
+                  label: "Add Cupom",
+                },
+                {
+                  key: "coupon-list",
+                  icon: <RiCouponLine className="fs-4" />,
+                  label: "Lista de Cupons",
+                },
+              ],
             },
             {
               key: "blogs",

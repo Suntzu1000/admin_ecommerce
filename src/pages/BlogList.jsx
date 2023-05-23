@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { Table } from "antd";
-import { FiEdit } from "react-icons/fi";
-import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getBlogs } from "../features/blogs/blogSlice";
-import { Link } from "react-router-dom";
 
 const columns = [
   {
