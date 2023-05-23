@@ -23,6 +23,27 @@ export const createCategory = createAsyncThunk(
   }
 );
 
+export const deleteProductCategory = createAsyncThunk(
+  "productCategory/delete-category",
+  async (id, thunkAPI) => {
+    try {
+      return await pCategoryService.deleteProductCategory(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const getProductCategory = createAsyncThunk(
+  "productCategory/get-product-category",
+  async (id, thunkAPI) => {
+    try {
+      return await pCategoryService.getProductCategory(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("Reset_all");
 
 const initialState = {

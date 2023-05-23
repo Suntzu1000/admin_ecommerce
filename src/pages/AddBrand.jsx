@@ -39,21 +39,21 @@ const AddBrand = () => {
         dispatch(resetState());
       }
     },
-    [getBrandId]
+    [getBrandId, dispatch]
   );
 
   useEffect(() => {
     if (isSuccess && createdBrand) {
       toast.success("Marca adicionada com Sucesso!");
     }
-    if (updatedBrand && isSuccess) {
+    if (isSuccess && updatedBrand) {
       toast.success("Atualizado com Sucesso!");
       navigate("/admin/list-brand");
     }
     if (isError) {
       toast.error("Algo deu errado!");
     }
-  }, [isSuccess, isError, isLoading, createdBrand]);
+  }, [isSuccess, isError, isLoading, createdBrand, navigate, updatedBrand]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -65,12 +65,13 @@ const AddBrand = () => {
       if (getBrandId !== undefined) {
         const data = { id: getBrandId, brandData: values };
         dispatch(updateBrand(data));
+        dispatch(resetState());
       } else {
         dispatch(createBrand(values));
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());
-        }, 3000);
+        }, 300);
       }
     },
   });
