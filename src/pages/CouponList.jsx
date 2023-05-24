@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Table } from "antd";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
-import { getCoupons } from "../features/coupon/couponSlice";
+import {
+  getCoupons,
+  deleteCoupon,
+  resetState,
+} from "../features/coupon/couponSlice";
 import { Link } from "react-router-dom";
 import CustomModal from "../components/CustomModal";
 
@@ -46,8 +50,9 @@ const CouponList = () => {
   };
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getCoupons());
-  }, []);
+  }, [dispatch]);
   const CouponState = useSelector((state) => state.coupon.coupons);
   const data1 = [];
   for (let i = 0; i < CouponState.length; i++) {
@@ -58,22 +63,43 @@ const CouponList = () => {
       expiry: new Date(CouponState[i].expiry).toLocaleString(),
       action: (
         <>
-          <Link to="/" className="fs-3 ">
+          <Link to={`/admin/coupon/${CouponState[i]._id}`} className="fs-3 ">
             <FiEdit />
           </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
+          <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(CouponState[i]._id)}
+          >
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       ),
     });
   }
+
+  const deleteACoupon = (e) => {
+    dispatch(deleteCoupon(e));
+
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getCoupons());
+    }, 100);
+  };
+
   return (
     <div>
       <h3 className="mb-4 title">Cupons</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteACoupon(couponId);
+        }}
+        title="Tem certeza que deseja deletar este cupom?"
+      />
     </div>
   );
 };
