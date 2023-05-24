@@ -35,7 +35,7 @@ const AddBlog = () => {
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
 
   const img = [];
   imgState.forEach((i) => {

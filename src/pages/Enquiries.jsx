@@ -40,7 +40,7 @@ const Enquiries = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEnquiries());
-  }, []);
+  }, [dispatch]);
   const enqState = useSelector((state) => state.enquiry.enquiries);
   const data1 = [];
   for (let i = 0; i < enqState.length; i++) {

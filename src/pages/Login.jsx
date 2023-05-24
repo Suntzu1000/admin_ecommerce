@@ -39,7 +39,7 @@ const Login = () => {
     } else {
       navigate("");
     }
-  }, [user, isLoading, isError, isSuccess, message]);
+  }, [user, isLoading, isError, isSuccess, message, navigate]);
 
   return (
     <div className="py-4" style={{ background: "#ffd333", minHeight: "100vh" }}>

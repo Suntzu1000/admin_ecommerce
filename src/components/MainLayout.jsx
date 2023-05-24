@@ -167,6 +167,7 @@ const MainLayout = () => {
           className="d-flex justify-content-between ps-1 pe-5"
           style={{
             padding: 0,
+            background: colorBgContainer,
           }}
         >
           <Button

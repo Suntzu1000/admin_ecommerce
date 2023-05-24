@@ -26,7 +26,7 @@ const BlogCatList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
   const bcatState = useSelector((state) => state.bcategory.bCategories);
   const data1 = [];
   for (let i = 0; i < bcatState.length; i++) {

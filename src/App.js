@@ -43,8 +43,10 @@ function App() {
           <Route path="customers" element={<Customers />} />
           <Route path="list-colors" element={<ColorList />} />
           <Route path="color" element={<AddColor />} />
+          <Route path="color/:id" element={<AddColor />} />
           <Route path="list-category" element={<CategoryList />} />
           <Route path="category" element={<AddCat />} />
+          <Route path="category/:id" element={<AddCat />} />
           <Route path="list-brand" element={<BrandList />} />
           <Route path="brand" element={<AddBrand />} />
           <Route path="brand/:id" element={<AddBrand />} />

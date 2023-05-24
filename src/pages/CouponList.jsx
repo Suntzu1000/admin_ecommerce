@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "antd";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
-import { getCoupon } from "../features/coupon/couponSlice";
+import { getCoupons } from "../features/coupon/couponSlice";
 import { Link } from "react-router-dom";
+import CustomModal from "../components/CustomModal";
 
 const columns = [
   {
@@ -33,9 +34,19 @@ const columns = [
 ];
 
 const CouponList = () => {
+  const [open, setOpen] = useState(false);
+  const [couponId, setcouponId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setcouponId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCoupon());
+    dispatch(getCoupons());
   }, []);
   const CouponState = useSelector((state) => state.coupon.coupons);
   const data1 = [];

@@ -49,7 +49,7 @@ const ProductList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [dispatch]);
   const productState = useSelector((state) => state.product.products);
   const data1 = [];
   for (let i = 0; i < productState.length; i++) {

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import couponService from "./couponService";
 
-export const getCoupon = createAsyncThunk(
+export const getCoupons = createAsyncThunk(
   "coupon/get-coupons",
   async (thunkAPI) => {
     try {
-      return await couponService.getCoupon();
+      return await couponService.getCoupons();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -23,6 +23,36 @@ export const createCoupon = createAsyncThunk(
   }
 );
 
+export const deleteACoupon = createAsyncThunk(
+  "coupon/delete-coupon",
+  async (id, thunkAPI) => {
+    try {
+      return await couponService.deleteCoupon(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const getACoupon = createAsyncThunk(
+  "coupon/get-coupon",
+  async (id, thunkAPI) => {
+    try {
+      return await couponService.getCoupon(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const updateACoupon = createAsyncThunk(
+  "coupon/update-coupon",
+  async (coupon, thunkAPI) => {
+    try {
+      return await couponService.updateCoupon(coupon);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const resetState = createAction("Reset_all");
 
 
@@ -40,16 +70,16 @@ export const couponSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCoupon.pending, (state) => {
+      .addCase(getCoupons.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getCoupon.fulfilled, (state, action) => {
+      .addCase(getCoupons.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.coupons = action.payload;
       })
-      .addCase(getCoupon.rejected, (state, action) => {
+      .addCase(getCoupons.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
