@@ -23,6 +23,38 @@ export const createNewBlogCat = createAsyncThunk(
   }
 );
 
+export const getBlogCat = createAsyncThunk(
+  "blogCategory/get-category",
+  async (id, thunkAPI) => {
+    try {
+      return await bcatService.getBlogCategory(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const updateBlogCat = createAsyncThunk(
+  "blogCategory/update-category",
+  async (blogCat, thunkAPI) => {
+    try {
+      return await bcatService.updateBlogCategory(blogCat);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteBlogCat = createAsyncThunk(
+  "blogCategory/delete-category",
+  async (id, thunkAPI) => {
+    try {
+      return await bcatService.deleteBlogCategory(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("Reset_all");
 
 const initialState = {
@@ -33,7 +65,7 @@ const initialState = {
   message: "",
 };
 
-export const pCategorySlice = createSlice({
+export const bCategorySlice = createSlice({
   name: "bCategories",
   initialState,
   reducers: {},
@@ -69,7 +101,52 @@ export const pCategorySlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
+      .addCase(getBlogCat.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getBlogCat.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.blogCatName = action.payload.title;
+      })
+      .addCase(getBlogCat.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateBlogCat.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateBlogCat.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedBCategory = action.payload;
+      })
+      .addCase(updateBlogCat.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(deleteBlogCat.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBlogCat.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedBCategory = action.payload;
+      })
+      .addCase(deleteBlogCat.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
       .addCase(resetState, () => initialState);
   },
 });
-export default pCategorySlice.reducer;
+export default bCategorySlice.reducer;

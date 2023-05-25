@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "antd";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
-import { getCategories } from "../features/bcategory/bcatSlice";
+import { deleteBlogCat, getCategories, resetState } from "../features/bcategory/bcatSlice";
 import { Link } from "react-router-dom";
+import CustomModal from "../components/CustomModal";
 
 const columns = [
   {
@@ -23,8 +24,20 @@ const columns = [
 ];
 
 const BlogCatList = () => {
+
+  const [open, setOpen] = useState(false);
+  const [blogCatId, setblogCatId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setblogCatId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState())
     dispatch(getCategories());
   }, [dispatch]);
   const bcatState = useSelector((state) => state.bcategory.bCategories);
@@ -35,22 +48,42 @@ const BlogCatList = () => {
       title: bcatState[i].title,
       action: (
         <>
-          <Link to="/" className="fs-3 ">
+          <Link to={`/admin/blog-category/${bcatState[i]._id}`} className="fs-3 ">
             <FiEdit />
           </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
+          <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(bcatState[i]._id)}
+          >
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       ),
     });
   }
+
+  const deleteABlogCategory = (e) => {
+    dispatch(deleteBlogCat(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getCategories());
+    }, 100);
+  };
+
   return (
     <div>
       <h3 className="mb-4 title">Blog de Categoria</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteABlogCategory(blogCatId);
+        }}
+        title="Tem certeza que deseja deletar a Categoria de Blog?"
+      />
     </div>
   );
 };
