@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getEnquiry } from "../features/enquiry/enquirySlice";
+import {
+  getEnquiry,
+  resetState,
+  updateEnquiry,
+} from "../features/enquiry/enquirySlice";
 import { BiArrowBack } from "react-icons/bi";
 
 const ViewEnq = () => {
@@ -20,12 +24,25 @@ const ViewEnq = () => {
     navigate(-1);
   };
 
+  const setEnquiryStatus = (e, i) => {
+    console.log(e, i);
+    const data = { id: i, enqData: e };
+    dispatch(updateEnquiry(data));
+    dispatch(resetState());
+    setTimeout(() => {
+      dispatch(getEnquiry(getEnqId));
+    }, 100)
+  };
+
   return (
     <>
       <div>
         <div className="d-flex justify-content-between align-items-center">
           <h3 className="mb-4 title"> Ver Informações</h3>
-          <button className="bg-transparent border-0 fs-5 mb-0 d-flex align-item-center " onClick={goBack}>
+          <button
+            className="bg-transparent border-0 fs-5 mb-0 d-flex align-item-center "
+            onClick={goBack}
+          >
             <BiArrowBack className="fs-5" /> Voltar
           </button>
         </div>
@@ -58,18 +75,15 @@ const ViewEnq = () => {
                 defaultValue={enqStatus ? enqStatus : "Enviado"}
                 id=""
                 className="form-control form-select"
+                onChange={(e) => setEnquiryStatus(e.target.value, getEnqId)}
               >
                 <option value="default" selected>
                   Selecionar Status
                 </option>
                 <option value="Enviado">Enviado</option>
                 <option value="Contatado">Contatado</option>
-                <option value="Em Processo" selected>
-                  Em Processo
-                </option>
-                <option value="Resolvido" selected>
-                  Resolvido
-                </option>
+                <option value="Em Processo">Em Processo</option>
+                <option value="Resolvido">Resolvido</option>
               </select>
             </div>
           </div>

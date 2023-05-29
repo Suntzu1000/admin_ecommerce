@@ -5,6 +5,7 @@ import {
   deleteEnquiry,
   getEnquiries,
   resetState,
+  updateEnquiry,
 } from "../features/enquiry/enquirySlice";
 import { AiFillDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -56,6 +57,21 @@ const Enquiries = () => {
     setOpen(false);
   };
 
+  const setEnquiryStatus = (e, i) => {
+    console.log(e, i);
+    const data = { id: i, enqData: e };
+    dispatch(updateEnquiry(data));
+  };
+
+  const deleteEnq = (e) => {
+    dispatch(deleteEnquiry(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getEnquiries());
+    }, 100);
+  };
+
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getEnquiries());
@@ -71,9 +87,25 @@ const Enquiries = () => {
       comment: enqState[i].comment,
       status: (
         <>
-          <select name="" id="" className="form-control form-select">
-            <option value="">Definir Status</option>
-          </select>
+          <select
+                name=""
+                defaultValue={enqState[i].status ? enqState[i].status : "Enviado"}
+                id=""
+                className="form-control form-select"
+                onChange={(e) => setEnquiryStatus(e.target.value, enqState[i]._id)}
+              >
+                <option value="default" selected>
+                  Selecionar Status
+                </option>
+                <option value="Enviado">Enviado</option>
+                <option value="Contatado">Contatado</option>
+                <option value="Em Processo" >
+                  Em Processo
+                </option>
+                <option value="Resolvido" >
+                  Resolvido
+                </option>
+              </select>
         </>
       ),
       action: (
@@ -95,13 +127,7 @@ const Enquiries = () => {
     });
   }
 
-  const deleteEnq = (e) => {
-    dispatch(deleteEnquiry(e));
-    setOpen(false);
-    setTimeout(() => {
-      dispatch(getEnquiries());
-    }, 100);
-  };
+ 
 
   return (
     <div>
@@ -115,7 +141,7 @@ const Enquiries = () => {
         performAction={() => {
           deleteEnq(enqId);
         }}
-        title="Are you sure you want to delete this enquiry?"
+        title="Você tem certeza que deseja deletar?"
       />
     </div>
   );
