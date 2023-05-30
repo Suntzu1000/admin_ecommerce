@@ -2,9 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
 import { getUserFromLocalStorage } from "../../utils/axiosconfig";
 
-
-
-
 const initialState = {
   user: getUserFromLocalStorage,
   orders: [],
@@ -27,6 +24,17 @@ export const getOrders = createAsyncThunk(
   async (thunkAPI) => {
     try {
       return await authService.getOrders();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getOrderByUserId = createAsyncThunk(
+  "order/get-order",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.getOrder(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -70,10 +78,24 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+      })
+      .addCase(getOrderByUserId.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrderByUserId.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.orderbyuser = action.payload;
+        state.message = "sucesso";
+      })
+      .addCase(getOrderByUserId.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
       });
   },
 });
 
 export default authSlice.reducer;
-
-

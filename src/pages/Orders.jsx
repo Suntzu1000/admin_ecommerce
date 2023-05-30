@@ -21,7 +21,7 @@ const columns = [
   },
   {
     title: "Produto",
-    dataIndex: "product",
+    dataIndex: "products",
   },
   {
     title: "Valor",
@@ -44,7 +44,7 @@ const ViewOrder = () => {
     data1.push({
       key: i + 1,
       firstname: orderState[i].orderby.firstname,
-      product: <Link to={`/admin/orders/${orderState[i].orderby._id}`} >Ver Pedidos</Link>,
+      products: <Link to={`/admin/order/${orderState[i].orderby._id}`} >Ver Pedidos</Link>,
       valor: orderState[i].paymentIntent.amount,
       date: new Date(orderState[i].createdAt).toLocaleString(),
       action: (
