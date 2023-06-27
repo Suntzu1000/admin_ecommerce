@@ -102,6 +102,8 @@ const AddProduct = () => {
     },
   });
 
+  console.log(pCategoryState);
+
   return (
     <div>
       <h3 className="mb-4 title">Add Produtos </h3>
@@ -170,7 +172,7 @@ const AddProduct = () => {
             className="form-control py-3 mb-3"
             id="category"
           >
-            <option value=""> Selecionar Categoria do Produto</option>
+            <option value="">Selecionar Categoria</option>
             {pCategoryState.map((i, cat) => {
               return (
                 <option value={i.title} key={cat}>
@@ -192,10 +194,9 @@ const AddProduct = () => {
             id=""
           >
             <option value="" disabled>
-              {" "}
               Selecionar Categoria do Produto
             </option>
-            <option value="featured">Apresentados</option>
+            <option value="featured">Destacados</option>
             <option value="popular">Populares </option>
             <option value="special">Speciais</option>
           </select>

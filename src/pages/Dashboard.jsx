@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsArrowDownRight } from "react-icons/bs";
 import { Column } from "@ant-design/plots";
 import { Table } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getMonthlyData } from "../features/auth/authSlice";
 
 const columns = [
   {
@@ -32,60 +34,51 @@ for (let i = 0; i < 46; i++) {
 }
 
 const Dashboard = () => {
-  const data = [
-    {
-      type: "Jan",
-      sales: 38,
-    },
-    {
-      type: "Fev",
-      sales: 52,
-    },
-    {
-      type: "Mar",
-      sales: 61,
-    },
-    {
-      type: "Abr",
-      sales: 145,
-    },
-    {
-      type: "Mai",
-      sales: 48,
-    },
-    {
-      type: "Jun",
-      sales: 38,
-    },
-    {
-      type: "Jul",
-      sales: 38,
-    },
-    {
-      type: "Ago",
-      sales: 38,
-    },
-    {
-      type: "Set",
-      sales: 38,
-    },
-    {
-      type: "Out",
-      sales: 38,
-    },
-    {
-      type: "Nov",
-      sales: 38,
-    },
-    {
-      type: "Dez",
-      sales: 38,
-    },
-  ];
-  const config = {
-    data,
+  const dispatch = useDispatch();
+  const monthLyDateState = useSelector((state) => state?.auth?.monthlyData);
+  const [dataMonthly, setDataMonthly] = useState([]);
+  const [dataMonthlySales, setDataMonthlySales] = useState([]);
+
+  useEffect(() => {
+    dispatch(getMonthlyData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    let monthNames = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    let data = [];
+    let monthlyOrderCount = [];
+    for (let index = 0; index < monthLyDateState?.length; index++) {
+      const element = monthLyDateState[index];
+      data.push({
+        type: monthNames[element?._id?.month],
+        Renda: element?.count,
+      });
+      monthlyOrderCount.push({
+        type: monthNames[element?._id?.month],
+        Vendas: element?.count,
+      });
+    }
+    setDataMonthly(data);
+    setDataMonthlySales(monthlyOrderCount);
+  }, [monthLyDateState]);
+
+  const config2 = {
+    data: dataMonthly,
     xField: "type",
-    yField: "sales",
+    yField: "Renda",
     color: ({ type }) => {
       return "#ffd333";
     },
@@ -110,7 +103,40 @@ const Dashboard = () => {
         alias: "Mês",
       },
       sales: {
-        alias: "Estatística",
+        alias: "Renda",
+      },
+    },
+  };
+
+  const config = {
+    data: dataMonthlySales,
+    xField: "type",
+    yField: "Venda",
+    color: ({ type }) => {
+      return "#ffd333";
+    },
+    label: {
+      // 可手动配置 label 数据标签位置
+      position: "middle",
+      // 'top', 'bottom', 'middle',
+      // 配置样式
+      style: {
+        fill: "#FFFFFF",
+        opacity: 1,
+      },
+    },
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
+    },
+    meta: {
+      type: {
+        alias: "Mês",
+      },
+      sales: {
+        alias: "Vendas",
       },
     },
   };
@@ -156,10 +182,18 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="mt-4">
-        <h3 className="mb-5 title">Estatísticas de Renda</h3>
-        <div>
-          <Column {...config} />;
+      <div className="d-flex justify-content-between gap-3">
+        <div className="mt-4">
+          <h3 className="mb-5 title">Estatísticas de Renda</h3>
+          <div>
+            <Column {...config} />
+          </div>
+        </div>
+        <div className="mt-4">
+          <h3 className="mb-5 title">Estatísticas de Renda</h3>
+          <div>
+            <Column {...config2} />
+          </div>
         </div>
       </div>
       <div className="mt-4">

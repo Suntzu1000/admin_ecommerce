@@ -62,7 +62,7 @@ const ProductList = () => {
       color: productState[i].color,
       action: (
         <>
-          <Link to="/" className="fs-3 ">
+          <Link to={`/admin/product/${productState[i]._id}`} className="fs-3 ">
             <FiEdit />
           </Link>
           <Link className="ms-3 fs-3 text-danger" to="/" >
