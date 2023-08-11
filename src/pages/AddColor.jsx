@@ -49,7 +49,7 @@ const AddColor = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      title: colorId || "",
+      title: colorId || "#000000",
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
@@ -76,9 +76,9 @@ const AddColor = () => {
             type="color"
             label="Definir Cor"
             name="title"
-            onCh={formik.handleChange("title")}
+            onChange={formik.handleChange("title")}
             onBlur={formik.handleBlur("title")}
-            val={formik.values.title}
+            value={formik.values.title}
             id="color"
           />
           <div className="error">

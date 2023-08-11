@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +26,7 @@ const Login = () => {
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
+      console.log(values);
       dispatch(login(values));
     },
   });
@@ -40,6 +41,12 @@ const Login = () => {
       navigate("");
     }
   }, [user, isLoading, isError, isSuccess, message, navigate]);
+
+
+  useEffect(() => {
+    console.log(formik.values);
+  }, [formik.values]);
+  
 
   return (
     <div className="py-4" style={{ background: "#ffd333", minHeight: "100vh" }}>
@@ -57,8 +64,8 @@ const Login = () => {
             name="email"
             label="E-mail"
             id="email"
-            val={formik.values.email}
-            onCh={formik.handleChange("email")}
+            value={formik.values.email}
+            onChange={formik.handleChange("email")}
           />
           <div className="error">
             {formik.touched.email && formik.errors.email ? (
@@ -70,16 +77,13 @@ const Login = () => {
             name="password"
             label="Senha"
             id="password"
-            val={formik.values.password}
-            onCh={formik.handleChange("password")}
+            value={formik.values.password}
+            onChange={formik.handleChange("password")}
           />
           <div className="error">
             {formik.touched.password && formik.errors.password ? (
               <div>{formik.errors.password}</div>
             ) : null}
-          </div>
-          <div className="mb-3 text-end ">
-            <Link to="/forgot-password">Esqueci a Senha</Link>
           </div>
           <button
             className="border-0 px-3 py-2 text-white fw-bold w-100 text-center text-decoration-none fs-5 "
