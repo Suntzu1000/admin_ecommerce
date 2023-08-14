@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
+import Header from "../components/Header";
 
 
 let userSchema = yup.object().shape({
@@ -49,16 +50,10 @@ const Login = () => {
   
 
   return (
-    <div className="py-4" style={{ background: "#ffd333", minHeight: "100vh" }}>
-      <br />
-      <br />
-      <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4 ">
-        <h3 className="text-center title">Login</h3>
-        <p className="text-center">Entre na sua conta para continuar</p>
-        <div className="error text-center">
-          {message.message === "Obrigatório" ? "Você não é um Admin!" : ""}
-        </div>
-        <form action="" onSubmit={formik.handleSubmit}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <Header heading="Login" paragraph="Entre na sua conta para continuar" />
+      <div className="bg-white rounded-md p-6 shadow-lg w-96">
+        <form onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
             name="email"
@@ -67,11 +62,9 @@ const Login = () => {
             value={formik.values.email}
             onChange={formik.handleChange("email")}
           />
-          <div className="error">
-            {formik.touched.email && formik.errors.email ? (
-              <div>{formik.errors.email}</div>
-            ) : null}
-          </div>
+          {formik.touched.email && formik.errors.email && (
+            <div className="text-red-500">{formik.errors.email}</div>
+          )}
           <CustomInput
             type="password"
             name="password"
@@ -80,14 +73,11 @@ const Login = () => {
             value={formik.values.password}
             onChange={formik.handleChange("password")}
           />
-          <div className="error">
-            {formik.touched.password && formik.errors.password ? (
-              <div>{formik.errors.password}</div>
-            ) : null}
-          </div>
+          {formik.touched.password && formik.errors.password && (
+            <div className="text-red-500">{formik.errors.password}</div>
+          )}
           <button
-            className="border-0 px-3 py-2 text-white fw-bold w-100 text-center text-decoration-none fs-5 "
-            style={{ background: "#ffd333" }}
+            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full"
             type="submit"
           >
             Entrar
@@ -99,3 +89,90 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+/*import React, { useEffect } from "react";
+import CustomInput from "../components/CustomInput";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import Header from "../components/Header"; 
+
+let userSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Email Deve Ser Válido")
+    .required("Email Obrigatório!"),
+  password: yup.string().required("Senha Obrigatória!"),
+});
+
+const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: userSchema,
+    onSubmit: (values) => {
+      dispatch(login(values));
+    },
+  });
+  const authState = useSelector((state) => state);
+
+  const { message } = authState.auth; 
+
+  useEffect(() => {
+    if (message === "Obrigatório") {
+      navigate("admin");
+    } else {
+      navigate("");
+    }
+  }, [message, navigate]);
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <Header heading="Login" paragraph="Entre na sua conta para continuar" />
+      <div className="bg-white rounded-md p-6 shadow-lg w-96">
+        <form onSubmit={formik.handleSubmit}>
+          <CustomInput
+            type="text"
+            name="email"
+            label="E-mail"
+            id="email"
+            value={formik.values.email}
+            onChange={formik.handleChange("email")}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className="text-red-500">{formik.errors.email}</div>
+          )}
+          <CustomInput
+            type="password"
+            name="password"
+            label="Senha"
+            id="password"
+            value={formik.values.password}
+            onChange={formik.handleChange("password")}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <div className="text-red-500">{formik.errors.password}</div>
+          )}
+          <button
+            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full"
+            type="submit"
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;*/ 

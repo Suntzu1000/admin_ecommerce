@@ -59,12 +59,11 @@ const Dashboard = () => {
     [getTokenFromLocalStorage]
   );
 
-
   useEffect(() => {
     dispatch(getMonthlyData(config3));
     dispatch(getYearlyData(config3));
     dispatch(getOrders(config3));
-  }, [dispatch]);
+  }, [dispatch, config3]);
 
   useEffect(() => {
     let monthNames = [
@@ -100,7 +99,7 @@ const Dashboard = () => {
     const data1 = [];
     for (let i = 0; i < orderState?.length; i++) {
       data1.push({
-        key: i ,
+        key: i,
         name: orderState[i]?.user?.firstname + orderState[i]?.user?.lastname,
         product: orderState[i]?.orderItems?.length,
         price: orderState[i]?.totalPrice,
@@ -178,22 +177,20 @@ const Dashboard = () => {
   return (
     <div>
       <h3 className="mb-4 title ">Dashboard</h3>
-      <div className="d-flex p-3 justify-content-between align-items-center gap-3">
-        <div className="d-flex  justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 ">
-          <div>
-            <p className="desc">Renda Total</p>
-            <h4 className="subtitle">
-              R$ {yearlyDateState && yearlyDateState[0]?.amount}
-            </h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <h6>
-              <BsArrowDownRight /> 32%
-            </h6>
-            <p className="mb-0 desc">Renda Total Anual</p>
-          </div>
+      <div className="flex flex-wrap gap-4 mt-4">
+        <div className="w-full md:w-1/3 p-4 bg-white rounded-lg shadow-md" >
+          <p className="desc">Renda Total</p>
+          <h4 className="subtitle">
+            R$ {yearlyDateState && yearlyDateState[0]?.amount}
+          </h4>
         </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 ">
+        <div className="w-full md:w-1/3 p-4 bg-white rounded-lg shadow-md">
+          <h6>
+            <BsArrowDownRight /> 32%
+          </h6>
+          <p className="mb-0 desc">Renda Total Anual</p>
+        </div>
+        <div className="w-full md:w-1/3 p-4 bg-white rounded-lg shadow-md ">
           <div>
             <p className="mb-0 desc">Vendas Totais</p>
             <h4 className="subtitle">
@@ -207,7 +204,7 @@ const Dashboard = () => {
             <p className="mb-0 desc">Venda Do Último Ano</p>
           </div>
         </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 ">
+        <div className="w-full md:w-1/3 p-4 bg-white rounded-lg shadow-md ">
           <div>
             <p className="mb-0 desc">Total</p>
             <h4 className="subtitle"> R$ 10000</h4>
@@ -220,23 +217,23 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="d-flex p-3 justify-content-between gap-3">
-        <div className="mt-4 flex-grow-1 w-50 ">
-          <h3 className="mb-5 title">Estatísticas de Renda</h3>
-          <div>
+      <div className="flex flex-wrap gap-4 mt-4">
+        <div className="w-full md:w-1/2 p-4 ">
+          <h3 className="mb-5 text-xl font-semibold">Estatísticas de Renda</h3>
+          <div className="bg-white rounded-lg shadow-md p-4" >
             <Column {...config} />
           </div>
         </div>
-        <div className="mt-4 flex-grow-1 w-50 ">
-          <h3 className="mb-5 title">Estatísticas de Renda</h3>
-          <div>
+        <div className="w-full md:w-1/2 p-4 ">
+          <h3 className="mb-5 text-xl font-semibold">Estatísticas de Venda</h3>
+          <div className="bg-white rounded-lg shadow-md p-4" >
             <Column {...config2} />
           </div>
         </div>
       </div>
       <div className="mt-4">
-        <h3 className="mb-5 title">Pedidos Recentes</h3>
-        <div>
+        <h3 className="mb-5 text-xl font-semibold">Pedidos Recentes</h3>
+        <div className="bg-white rounded-lg shadow-md p-4" >
           <Table columns={columns} dataSource={orderData} />
         </div>
       </div>

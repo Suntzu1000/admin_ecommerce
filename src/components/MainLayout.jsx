@@ -32,8 +32,8 @@ const MainLayout = () => {
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo">
-          <h2 className="text-white fs-5 text-center py-3 mb-0">
+        <div className="logo text-center py-3">
+          <h2 className="text-white text-xl">
             <span className="sm-logo">DC</span>
             <span className="lg-logo">Dev GG</span>
           </h2>
@@ -44,8 +44,8 @@ const MainLayout = () => {
           defaultSelectedKeys={[""]}
           onClick={({ key }) => {
             if (key === "signout") {
-              localStorage.clear()
-              window.location.reload()
+              localStorage.clear();
+              window.location.reload();
             } else {
               navigate(key);
             }
@@ -172,7 +172,7 @@ const MainLayout = () => {
       </Sider>
       <Layout>
         <div
-          className="d-flex justify-content-between ps-1 pe-5"
+          className="flex justify-between ps-1 pe-5"
           style={{
             padding: 0,
             background: colorBgContainer,
@@ -188,25 +188,30 @@ const MainLayout = () => {
               height: 64,
             }}
           />
-          <div className="d-flex gap-4 align-items-center">
-            <div className="position-relative">
-              <IoIosNotifications className="fs-2" />
-              <span className="badge bg-warning rounded-circle p-1 position-absolute ">
+          <div className="flex gap-4 items-center">
+            <div className="relative">
+              <IoIosNotifications className="text-xl" />
+              <span className="badge bg-warning rounded-full p-1 absolute -top-1 -right-1">
                 3
               </span>
             </div>
-            <div className="d-flex gap-3 align-items-center dropdown">
+            <div className="flex gap-3 items-center dropdown">
               <div>
-                <img width={32} height={32} src={perfil} alt="Perfil" />
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src={perfil}
+                  alt="Perfil"
+                />
               </div>
               <div
                 role="button"
                 id="dropdownMenuLink"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                className="cursor-pointer"
               >
-                <h5 className="mb-0 ">Suntzu</h5>
-                <p className="mb-0">gabrielfootze@gmail.com</p>
+                <h5 className="mb-0 text-sm font-semibold ">Suntzu</h5>
+                <p className="mb-0 text-xs">gabrielfootze@gmail.com</p>
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
@@ -232,11 +237,8 @@ const MainLayout = () => {
           </div>
         </div>
         <Content
-          style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
-          }}
+          className="mt-4 mx-4 md:mx-8"
+         
         >
           <ToastContainer
             position="top-right"
